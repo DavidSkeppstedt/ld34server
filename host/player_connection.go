@@ -11,7 +11,7 @@ import (
 
 type PlayerConnection struct {
 	conn        net.Conn
-	player      player.Player
+	player      *player.Player
 	jsonEncoder *(json.Encoder)
 }
 
@@ -30,7 +30,6 @@ func (this *PlayerConnection) Play() {
 		if err == io.EOF {
 			break
 		}
-		log.Println(string(msg))
 	}
 }
 

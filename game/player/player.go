@@ -27,7 +27,7 @@ func (this *Player) move(speed float32) {
 }
 
 type PlayerManager struct {
-	Players []Player
+	Players []*Player
 }
 
 func (this *PlayerManager) Update() {
@@ -36,9 +36,9 @@ func (this *PlayerManager) Update() {
 	}
 }
 
-func (this *PlayerManager) CreatePlayer() Player {
-	pos := &Position{700, 398}
+func (this *PlayerManager) CreatePlayer() *Player {
+	pos := &Position{200, 398}
 	p := &Player{Pos: *pos}
-	this.Players = append(this.Players, *p)
-	return *p
+	this.Players = append(this.Players, p)
+	return p
 }
