@@ -23,5 +23,6 @@ func ListenAndServe() {
 }
 func handleConnection(con net.Conn) {
 	defer con.Close()
+	log.Println("A new connection was made!")
 	con.Write([]byte("Hello"))
 }
