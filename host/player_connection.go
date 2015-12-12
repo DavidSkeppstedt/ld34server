@@ -20,6 +20,7 @@ func (this *PlayerConnection) Play() {
 	p := game.Pmanager.CreatePlayer()
 	this.player = p
 	this.jsonEncoder.Encode(p.Pos) //should write to the socket.. hopefully
+	log.Println("Send inital player position to server", p.Pos)
 	for {
 		msg := make([]byte, 1024)
 		_, err := this.conn.Read(msg)
