@@ -31,7 +31,7 @@ func Inc(con net.Conn) {
 
 func Dec(con net.Conn) {
 	connections--
-	log.Println(con.RemoteAddr().String(), "disconnectedt, connection #", connections)
+	log.Println(con.RemoteAddr().String(), "disconnected, connection #", connections)
 }
 func handleConnection(con net.Conn) {
 	defer con.Close()
