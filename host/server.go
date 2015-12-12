@@ -1,6 +1,7 @@
 package host
 
 import (
+	_ "github.com/DavidSkeppstedt/ld34server/game/player"
 	"log"
 	"net"
 )
@@ -36,4 +37,6 @@ func handleConnection(con net.Conn) {
 	defer con.Close()
 	defer Dec(con)
 	Inc(con)
+	playerConn := &PlayerConnection{conn: con}
+	playerConn.Play()
 }
