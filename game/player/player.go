@@ -15,7 +15,7 @@ type Position struct {
 }
 
 func (this *Player) Update() {
-	this.move(5)
+	this.move(0.15)
 }
 func (this *Player) AngleInc(amt float32) {
 	this.Angle += amt
