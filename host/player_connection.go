@@ -19,9 +19,12 @@ func (this *PlayerConnection) Play() {
 	this.jsonEncoder = json.NewEncoder(this.conn)
 	p := game.Pmanager.CreatePlayer()
 	this.player = p
-	this.jsonEncoder.Encode(p.Pos) //should write to the socket.. hopefully
+
 	log.Println("Send inital player position to server", p.Pos)
+
 	for {
+		this.SendPosition()
+
 		msg := make([]byte, 1024)
 		_, err := this.conn.Read(msg)
 		if err == io.EOF {
@@ -29,4 +32,8 @@ func (this *PlayerConnection) Play() {
 		}
 		log.Println(string(msg))
 	}
+}
+
+func (this *PlayerConnection) SendPosition() {
+	this.jsonEncoder.Encode(this.player.Pos)
 }
