@@ -5,6 +5,8 @@ import (
 	"net"
 )
 
+var connections int
+
 func ListenAndServe() {
 	log.Println("Initializing the server")
 	socket, err := net.Listen("tcp", ":7978")
@@ -21,8 +23,17 @@ func ListenAndServe() {
 		go handleConnection(con)
 	}
 }
+func Inc(con net.Conn) {
+	log.Println("Connection made from", con.RemoteAddr().String(), "connection #", connections)
+	connections++
+}
+
+func Dec(con net.Conn) {
+	connections--
+	log.Println(con.RemoteAddr().String(), "disconnectedt, connection #", connections)
+}
 func handleConnection(con net.Conn) {
 	defer con.Close()
-	log.Println("A new connection was made!")
-	con.Write([]byte("Hello"))
+	defer Dec(con)
+	Inc(con)
 }
