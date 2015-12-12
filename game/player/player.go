@@ -10,8 +10,8 @@ type Player struct {
 }
 
 type Position struct {
-	X float32 `json:"position-x"`
-	Y float32 `json:"position-y"`
+	X float32 `json:"pos_x"`
+	Y float32 `json:"pos_y"`
 }
 
 func (this *Player) Update() {
