@@ -6,6 +6,7 @@ import (
 )
 
 var Pmanager player.PlayerManager
+var Bmanager player.BulletManager
 
 func StartGame() {
 	go func() {
@@ -13,6 +14,7 @@ func StartGame() {
 		for range timer {
 			//Update game logic here..
 			Pmanager.Update()
+			Bmanager.Update()
 		}
 	}()
 }
