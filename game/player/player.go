@@ -8,6 +8,8 @@ import (
 )
 
 var random = rand.New(rand.NewSource(time.Now().UnixNano()))
+var speed float32 = 1
+var TurnSpeed float32 = 5
 
 type Player struct {
 	Pos   Position
@@ -20,7 +22,7 @@ type Position struct {
 }
 
 func (this *Player) Update() {
-	this.move(0.09)
+	this.move(speed)
 }
 func (this *Player) AngleInc(amt float32) {
 	this.Angle += amt
