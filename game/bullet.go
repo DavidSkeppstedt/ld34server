@@ -13,8 +13,8 @@ type Bullet struct {
 
 func (this *Bullet) move() {
 
-	this.Pos.X += speed * float32(math.Cos(float64(this.Angle)*math.Pi/180))
-	this.Pos.Y += speed * float32(math.Sin(float64(this.Angle)*math.Pi/180))
+	this.Pos.X += this.Speed * float32(math.Cos(float64(this.Angle)*math.Pi/180))
+	this.Pos.Y += this.Speed * float32(math.Sin(float64(this.Angle)*math.Pi/180))
 }
 func (this *Bullet) outside() {
 	if this.Pos.X > float32(width) || this.Pos.X < 0 {
