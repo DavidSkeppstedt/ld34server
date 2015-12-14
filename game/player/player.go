@@ -46,3 +46,14 @@ func (this *PlayerManager) CreatePlayer() *Player {
 	this.Players = append(this.Players, p)
 	return p
 }
+func (this *PlayerManager) PositionsFiltered(toFilter *Player) []Position {
+
+	allPos := make([]Position, len(this.Players)-1)
+	for _, v := range this.Players {
+		if v != toFilter {
+			allPos = append(allPos, v.Pos)
+		}
+
+	}
+	return allPos
+}
