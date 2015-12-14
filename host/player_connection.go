@@ -26,12 +26,22 @@ func (this *PlayerConnection) Play() {
 	for {
 		this.SendPosition()
 
-		msg := make([]byte, 1024)
-		_, err := this.conn.Read(msg)
-		if err == io.EOF {
+		data, err := this.ReciveInput()
+		if err != nil {
+			log.Println("Problem detected")
 			break
 		}
+		this.ChangeState(data)
 	}
+}
+func (this *PlayerConnection) ChangeState(state []byte) {
+	switch state[0] {
+	case 1:
+		this.player.AngleInc(player.TurnSpeed)
+	case 2:
+		this.player.AngleInc(-player.TurnSpeed)
+	}
+
 }
 
 type PositionPackage struct {
