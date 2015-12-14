@@ -70,10 +70,10 @@ func (this *PlayerManager) RemovePlayer(toRemove *Player) {
 
 func (this *PlayerManager) PositionsFiltered(toFilter *Player) []Position {
 
-	allPos := make([]Position, len(this.Players)-1)
 	if len(this.Players)-1 < 1 {
 		return []Position{}
 	}
+	var allPos []Position
 	for _, v := range this.Players {
 		if v != nil && v != toFilter {
 			allPos = append(allPos, v.Pos)
