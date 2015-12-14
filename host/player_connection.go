@@ -43,3 +43,12 @@ func (this *PlayerConnection) SendPosition() {
 	data := &PositionPackage{this.player.Pos, game.Pmanager.PositionsFiltered(this.player)}
 	this.jsonEncoder.Encode(data)
 }
+func (this *PlayerConnection) ReciveInput() ([]byte, error) {
+	data := make([]byte, 1)
+	_, err := this.conn.Read(data)
+	if err == io.EOF {
+		log.Println(err.Error())
+		return []byte{}, err
+	}
+	return data, nil
+}
