@@ -1,12 +1,11 @@
 package game
 
 import (
-	"github.com/DavidSkeppstedt/ld34server/game/player"
 	"time"
 )
 
-var Pmanager player.PlayerManager
-var Bmanager player.BulletManager
+var Pmanager PlayerManager
+var Bmanager BulletManager
 
 func StartGame() {
 	go func() {

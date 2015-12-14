@@ -3,7 +3,6 @@ package host
 import (
 	"encoding/json"
 	"github.com/DavidSkeppstedt/ld34server/game"
-	"github.com/DavidSkeppstedt/ld34server/game/player"
 	"io"
 	"log"
 	"net"
@@ -11,7 +10,7 @@ import (
 
 type PlayerConnection struct {
 	conn        net.Conn
-	player      *player.Player
+	player      *game.Player
 	jsonEncoder *(json.Encoder)
 }
 
@@ -37,16 +36,16 @@ func (this *PlayerConnection) Play() {
 func (this *PlayerConnection) ChangeState(state []byte) {
 	switch state[0] {
 	case 1:
-		this.player.AngleInc(player.TurnSpeed)
+		this.player.AngleInc(game.TurnSpeed)
 	case 2:
-		this.player.AngleInc(-player.TurnSpeed)
+		this.player.AngleInc(-game.TurnSpeed)
 	}
 
 }
 
 type PlayersPackage struct {
-	Player  player.Player   `json:"player"`
-	Enemies []player.Player `json:"enemies"`
+	Player  game.Player   `json:"player"`
+	Enemies []game.Player `json:"enemies"`
 }
 
 func (this *PlayerConnection) SendPosition() {
