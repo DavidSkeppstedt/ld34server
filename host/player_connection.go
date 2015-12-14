@@ -44,13 +44,13 @@ func (this *PlayerConnection) ChangeState(state []byte) {
 
 }
 
-type PositionPackage struct {
-	Player  player.Position   `json:"player_pos"`
-	Enemies []player.Position `json:"other_pos"`
+type PlayersPackage struct {
+	Player  player.Player   `json:"player"`
+	Enemies []player.Player `json:"enemies"`
 }
 
 func (this *PlayerConnection) SendPosition() {
-	data := &PositionPackage{this.player.Pos, game.Pmanager.PositionsFiltered(this.player)}
+	data := &PlayersPackage{*this.player, game.Pmanager.PlayersFiltered(this.player)}
 	this.jsonEncoder.Encode(data)
 }
 func (this *PlayerConnection) ReciveInput() ([]byte, error) {

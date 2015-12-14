@@ -12,8 +12,8 @@ var speed float32 = 1
 var TurnSpeed float32 = 5
 
 type Player struct {
-	Pos   Position
-	Angle float32
+	Pos   Position `json:"position"`
+	Angle float32  `json:"angle"`
 }
 
 type Position struct {
@@ -83,4 +83,18 @@ func (this *PlayerManager) PositionsFiltered(toFilter *Player) []Position {
 
 	}
 	return allPos
+}
+func (this *PlayerManager) PlayersFiltered(toFilter *Player) []Player {
+
+	if len(this.Players)-1 < 1 {
+		return []Player{}
+	}
+	var allPlayers []Player
+	for _, v := range this.Players {
+		if v != nil && v != toFilter {
+			allPlayers = append(allPlayers, *v)
+		}
+
+	}
+	return allPlayers
 }
