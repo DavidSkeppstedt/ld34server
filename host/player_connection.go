@@ -39,6 +39,8 @@ func (this *PlayerConnection) ChangeState(state []byte) {
 		this.player.AngleInc(game.TurnSpeed)
 	case 2:
 		this.player.AngleInc(-game.TurnSpeed)
+	case 3:
+		this.player.Alive = true
 	}
 
 }
