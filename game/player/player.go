@@ -10,6 +10,8 @@ import (
 var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 var speed float32 = 1
 var TurnSpeed float32 = 5
+var width = 1280
+var heigth = 720
 
 type Player struct {
 	Pos   Position `json:"position"`
@@ -23,6 +25,7 @@ type Position struct {
 
 func (this *Player) Update() {
 	this.move(speed)
+	this.wrap()
 }
 func (this *Player) AngleInc(amt float32) {
 	this.Angle += amt
@@ -34,6 +37,22 @@ func (this *Player) AngleInc(amt float32) {
 func (this *Player) move(speed float32) {
 	this.Pos.X += speed * float32(math.Cos(float64(this.Angle)*math.Pi/180))
 	this.Pos.Y += speed * float32(math.Sin(float64(this.Angle)*math.Pi/180))
+}
+
+func (this *Player) wrap() {
+	if this.Pos.X > float32(width) {
+		this.Pos.X = 0
+	}
+	if this.Pos.X < 0 {
+		this.Pos.X = float32(width)
+	}
+
+	if this.Pos.Y > float32(heigth) {
+		this.Pos.Y = 0
+	}
+	if this.Pos.Y < 0 {
+		this.Pos.Y = float32(heigth)
+	}
 }
 
 type PlayerManager struct {
