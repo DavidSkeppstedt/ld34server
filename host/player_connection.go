@@ -46,10 +46,12 @@ func (this *PlayerConnection) ChangeState(state []byte) {
 type PlayersPackage struct {
 	Player  game.Player   `json:"player"`
 	Enemies []game.Player `json:"enemies"`
+	Bullets []game.Bullet `json:"bullets"`
 }
 
 func (this *PlayerConnection) SendPosition() {
-	data := &PlayersPackage{*this.player, game.Pmanager.PlayersFiltered(this.player)}
+	data := &PlayersPackage{*this.player, game.Pmanager.PlayersFiltered(this.player),
+		game.Bmanager.Get()}
 	this.jsonEncoder.Encode(data)
 }
 func (this *PlayerConnection) ReciveInput() ([]byte, error) {

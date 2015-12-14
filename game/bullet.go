@@ -7,8 +7,8 @@ import (
 type Bullet struct {
 	Pos   Position `json:"position"`
 	Angle float32  `json:"angle"`
-	Speed float32  `json:speed"`
-	Dead  bool
+	Speed float32  `json:"-"`
+	Dead  bool     `json:"-"`
 }
 
 func (this *Bullet) move() {
@@ -33,12 +33,23 @@ func (this *Bullet) Update() {
 }
 
 type BulletManager struct {
-	Bullets []Bullet
+	Bullets []*Bullet
+}
+
+func (this *BulletManager) Get() []Bullet {
+	var allBullets []Bullet
+	if len(this.Bullets) < 1 {
+		return []Bullet{}
+	}
+	for _, v := range this.Bullets {
+		allBullets = append(allBullets, *v)
+	}
+	return allBullets
 }
 
 func (this *BulletManager) NewBullet(player Player) {
 	bullet := &Bullet{player.Pos, player.Angle, 5, true}
-	this.Bullets = append(this.Bullets, *bullet)
+	this.Bullets = append(this.Bullets, bullet)
 }
 func (this *BulletManager) Update() {
 	for i, bullet := range this.Bullets {
