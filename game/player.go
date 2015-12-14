@@ -34,6 +34,7 @@ func (this *Player) Update() {
 		shootTimer = 500
 		if canShoot {
 			log.Println("Shoot!")
+			Bmanager.NewBullet(*this)
 		}
 	} else {
 		shootTimer -= 1
