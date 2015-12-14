@@ -1,6 +1,7 @@
 package player
 
 import (
+	"log"
 	"math"
 	"math/rand"
 	"sync"
@@ -12,7 +13,10 @@ var speed float32 = 1
 var TurnSpeed float32 = 5
 var width = 1280
 var heigth = 720
+var canShoot bool
+var shootTimer = 500
 
+//24 width 38 heigth
 type Player struct {
 	Pos   Position `json:"position"`
 	Angle float32  `json:"angle"`
@@ -26,8 +30,18 @@ type Position struct {
 func (this *Player) Update() {
 	this.move(speed)
 	this.wrap()
+	if shootTimer == 0 {
+		shootTimer = 500
+		if canShoot {
+			log.Println("Shoot!")
+		}
+	} else {
+		shootTimer -= 1
+	}
+	canShoot = true
 }
 func (this *Player) AngleInc(amt float32) {
+	canShoot = false
 	this.Angle += amt
 	if this.Angle > 360 {
 		this.Angle = 0 + (this.Angle - 360)
