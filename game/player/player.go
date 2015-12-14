@@ -59,7 +59,7 @@ var listMutex sync.Mutex
 func (this *PlayerManager) RemovePlayer(toRemove *Player) {
 	listMutex.Lock()
 	defer listMutex.Unlock()
-	players := make([]*Player, len(this.Players)-1)
+	var players []*Player
 	for _, v := range this.Players {
 		if v != toRemove {
 			players = append(players, v)
