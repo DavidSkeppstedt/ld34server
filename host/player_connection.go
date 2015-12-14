@@ -33,6 +33,12 @@ func (this *PlayerConnection) Play() {
 	}
 }
 
+type PositionPackage struct {
+	Player  player.Position   `json:"player_pos"`
+	Enemies []player.Position `json:"other_pos"`
+}
+
 func (this *PlayerConnection) SendPosition() {
-	this.jsonEncoder.Encode(this.player.Pos)
+	data := &PositionPackage{this.player.Pos, game.Pmanager.PositionsFiltered(this.player)}
+	this.jsonEncoder.Encode(data)
 }
