@@ -2,7 +2,11 @@ package player
 
 import (
 	"math"
+	"math/rand"
+	"time"
 )
+
+var random = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 type Player struct {
 	Pos   Position
@@ -15,7 +19,7 @@ type Position struct {
 }
 
 func (this *Player) Update() {
-	this.move(0.15)
+	this.move(0.0)
 }
 func (this *Player) AngleInc(amt float32) {
 	this.Angle += amt
@@ -37,7 +41,7 @@ func (this *PlayerManager) Update() {
 }
 
 func (this *PlayerManager) CreatePlayer() *Player {
-	pos := &Position{200, 398}
+	pos := &Position{random.Float32() * 1280, random.Float32() * 720}
 	p := &Player{Pos: *pos}
 	this.Players = append(this.Players, p)
 	return p
