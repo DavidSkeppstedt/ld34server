@@ -19,10 +19,13 @@ type Position struct {
 }
 
 func (this *Player) Update() {
-	this.move(0.0)
+	this.move(0.09)
 }
 func (this *Player) AngleInc(amt float32) {
 	this.Angle += amt
+	if this.Angle > 360 {
+		this.Angle = 0 + (this.Angle - 360)
+	}
 }
 
 func (this *Player) move(speed float32) {
