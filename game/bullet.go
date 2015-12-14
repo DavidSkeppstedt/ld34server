@@ -5,10 +5,13 @@ import (
 )
 
 type Bullet struct {
-	Pos   Position `json:"position"`
-	Angle float32  `json:"angle"`
-	Speed float32  `json:"-"`
-	Dead  bool     `json:"-"`
+	Pos    Position `json:"position"`
+	Angle  float32  `json:"angle"`
+	Speed  float32  `json:"-"`
+	Width  int      `json:"-"`
+	Heigth int      `json:"-"`
+	Dead   bool     `json:"-"`
+	Alive  bool     `json:"-"`
 }
 
 func (this *Bullet) move() {
@@ -28,8 +31,12 @@ func (this *Bullet) outside() {
 	this.Dead = false
 }
 func (this *Bullet) Update() {
-	this.move()
-	this.outside()
+	if this.Alive {
+		this.move()
+		this.outside()
+	} else {
+		this.Dead = true
+	}
 }
 
 type BulletManager struct {
@@ -48,7 +55,11 @@ func (this *BulletManager) Get() []Bullet {
 }
 
 func (this *BulletManager) NewBullet(player Player) {
-	bullet := &Bullet{player.Pos, player.Angle, 5, true}
+	bullet := &Bullet{player.Pos, player.Angle, 5, 2, 5, false, true}
+	bullet.move()
+	bullet.move()
+	bullet.move()
+	bullet.move()
 	this.Bullets = append(this.Bullets, bullet)
 }
 func (this *BulletManager) Update() {

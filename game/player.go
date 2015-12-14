@@ -1,7 +1,6 @@
 package game
 
 import (
-	"log"
 	"math"
 	"math/rand"
 	"sync"
@@ -14,12 +13,15 @@ var TurnSpeed float32 = 5
 var width = 1280
 var heigth = 720
 var canShoot bool
-var shootTimer = 500
+var shootTimer = 100
 
 //24 width 38 heigth
 type Player struct {
-	Pos   Position `json:"position"`
-	Angle float32  `json:"angle"`
+	Pos    Position `json:"position"`
+	Angle  float32  `json:"angle"`
+	Width  int      `json:"-"`
+	Heigth int      `json:"-"`
+	Alive  bool     `json:"Alive"`
 }
 
 type Position struct {
@@ -31,9 +33,8 @@ func (this *Player) Update() {
 	this.move(speed)
 	this.wrap()
 	if shootTimer == 0 {
-		shootTimer = 500
+		shootTimer = 100
 		if canShoot {
-			log.Println("Shoot!")
 			Bmanager.NewBullet(*this)
 		}
 	} else {
@@ -78,14 +79,16 @@ func (this *PlayerManager) Update() {
 	for _, player := range this.Players {
 		if player != nil {
 
-			player.Update()
+			if player.Alive {
+				player.Update()
+			}
 		}
 	}
 }
 
 func (this *PlayerManager) CreatePlayer() *Player {
 	pos := &Position{random.Float32() * 1280, random.Float32() * 720}
-	p := &Player{Pos: *pos}
+	p := &Player{Pos: *pos, Width: 28, Heigth: 38, Alive: true}
 	this.Players = append(this.Players, p)
 	return p
 }
