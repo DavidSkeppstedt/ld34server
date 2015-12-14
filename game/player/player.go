@@ -3,6 +3,7 @@ package player
 import (
 	"math"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -49,6 +50,21 @@ func (this *PlayerManager) CreatePlayer() *Player {
 	this.Players = append(this.Players, p)
 	return p
 }
+
+var listMutex sync.Mutex
+
+func (this *PlayerManager) RemovePlayer(toRemove *Player) {
+	listMutex.Lock()
+	defer listMutex.Unlock()
+	players := make([]*Player, len(this.Players)-1)
+	for _, v := range this.Players {
+		if v != toRemove {
+			players = append(players, v)
+		}
+	}
+	this.Players = players
+}
+
 func (this *PlayerManager) PositionsFiltered(toFilter *Player) []Position {
 
 	allPos := make([]Position, len(this.Players)-1)

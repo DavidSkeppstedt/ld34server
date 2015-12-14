@@ -18,6 +18,7 @@ type PlayerConnection struct {
 func (this *PlayerConnection) Play() {
 	this.jsonEncoder = json.NewEncoder(this.conn)
 	p := game.Pmanager.CreatePlayer()
+	defer game.Pmanager.RemovePlayer(p)
 	this.player = p
 
 	log.Println("Send inital player position to server", p.Pos)
