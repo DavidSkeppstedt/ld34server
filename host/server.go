@@ -1,7 +1,6 @@
 package host
 
 import (
-	_ "github.com/DavidSkeppstedt/ld34server/game/player"
 	"log"
 	"net"
 )
