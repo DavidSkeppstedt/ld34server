@@ -63,7 +63,8 @@ func (this *BulletManager) NewBullet(player Player) {
 	this.Bullets = append(this.Bullets, bullet)
 }
 func (this *BulletManager) Update() {
-	for i, bullet := range this.Bullets {
+	for i := len(this.Bullets) - 1; i >= 0; i-- {
+		bullet := this.Bullets[i]
 		bullet.Update()
 		if bullet.Dead {
 			this.Bullets = append(this.Bullets[:i], this.Bullets[i+1:]...)
